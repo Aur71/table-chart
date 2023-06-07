@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Table from './components/table/Table';
+import Loading from './components/loading/Loading';
+import Error from './components/error/Error';
 import Chart from './components/chrat/Chart';
 
 function App() {
@@ -19,7 +21,6 @@ function App() {
         setData(parsedData.data);
         setLoading(false);
       } catch (error) {
-        console.log(error);
         setError(error);
         setLoading(false);
       }
@@ -28,20 +29,8 @@ function App() {
     fetchData();
   }, []);
 
-  if (loading) {
-    return (
-      <main>
-        <h1>Loading...</h1>
-      </main>
-    );
-  }
-  if (error) {
-    return (
-      <main>
-        <h1>Error</h1>
-      </main>
-    );
-  }
+  if (loading) return <Loading />;
+  if (error) return <Error error={error} />;
 
   return (
     <main className='app'>
